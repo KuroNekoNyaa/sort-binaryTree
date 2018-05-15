@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  /*  function insertionSort(arr) {
+        var len = arr.length, key;
+        for (var i =1; i < len; i++) {
+            key = arr[i];
+            var j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                arr[j+ 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+        return arr;
+    }*/
+function insertionSort(arr) {
+    var len = arr.length,
+        key;
+    for (var i = 0; i < len; i++){
+        key = arr[i];
+        var j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = key;
+    }
+    return arr;
+}
+    var arr =[3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
+    console.log(insertionSort(arr));
+</script>
+</body>
+</html>

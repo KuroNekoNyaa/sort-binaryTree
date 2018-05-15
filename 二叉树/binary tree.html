@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function BinaryTree() {
+        var Node = function (key) {
+            this.key = key;
+            this.left = null;
+            this.right = null;
+        };
+        var root = null;
+        // 第一次插入节点
+        this.insert = function (key) {
+            var newNode = new Node(key);
+            if (root === null) {
+                root = newNode;
+            } else {
+                insertNode(root, newNode)
+            }
+        }
+
+        var insertNode = function (node, newNode) {
+            if (newNode.key < node.key) {
+                if (node.left === null) {
+                    node.left = newNode;
+                } else {
+                    insertNode(node.left, newNode);
+                }
+            } else {
+                if (node.right === null) {
+                    node.right = newNode;
+                } else {
+                    insertNode(node.right, newNode)
+                }
+            }
+        }
+
+        //中序遍历，先遍历左子树，再返回父节点，再遍历右子树
+        this.inOrderTraverse = function (callback) {
+            inOrderTraverseNode(root, callback)
+        };
+        function inOrderTraverseNode(node, callback) {
+            if (node !== null) {
+                inOrderTraverseNode(node.left, callback);
+                callback(node.key);
+                inOrderTraverseNode(node.right, callback);
+            }
+        }
+
+
+
+        //前序遍历，先遍历当前节点，再遍历左，然后右
+        this.beforeTraverse = function (callback) {
+            beforeTraverseNode(root, callback);
+        };
+        function beforeTraverseNode(node, callback) {
+            if (node !== null) {
+                callback(node.key);
+                beforeTraverseNode(node.left, callback);
+                beforeTraverseNode(node.right, callback)
+            }
+        }
+
+        //后续遍历 ，先左后右，再当前
+        this.afterTraverse = function (callback) {
+            afterTraverseNode(root, callback);
+        };
+        function afterTraverseNode(node, callback) {
+            if (node !== null) {
+                afterTraverseNode(node.left, callback);
+                afterTraverseNode(node.right, callback);
+                callback(node.key);
+            }
+        }
+
+
+        //查找最小值
+        this.min = function () {
+            return minNode(root);
+        }
+        function minNode(node) {
+            if (node) {
+                while(node && node.left !== null) {
+                    node = node.left;
+                }
+                return node.key;
+            }
+            return null;
+        }
+
+        // 查找最大值
+        this.max = function () {
+            return maxNode(root);
+        };
+        function maxNode(node) {
+            if (node) {
+                while(node && node.right !== null) {
+                    node = node.right;
+                }
+                return node.key;
+            }
+            return null;
+        }
+
+
+        // 查找是否存在某个值
+        this.search = function (key) {
+            return searchNode(root, key);
+        };
+        function searchNode(node, key) {
+            if (node === null) {
+                return false;
+            }
+            if (key < node.key) {
+                return searchNode(node.left, key);
+            } else if (key > node.key) {
+                return searchNode(node.right, key);
+            } else {
+                return true;
+            }
+        }
+    }
+
+    var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13];
+    var binaryTree = new BinaryTree();
+    // 创建二叉树
+    nodes.forEach(function (key) {
+        binaryTree.insert(key);
+    })
+
+    var callback = function (key) {
+        console.log(key)
+    }
+
+    // 二叉树遍历
+    binaryTree.inOrderTraverse(callback)
+    binaryTree.beforeTraverse(callback);
+    binaryTree.afterTraverse(callback);
+
+
+    console.log("min node is :" + binaryTree.min())
+    console.log("max node is :" + binaryTree.max())
+
+    console.log(binaryTree.search(7) ? "找到了" : "没找到");
+    console.log(binaryTree.search(0) ? "找到了" : "没找到");
+
+
+
+
+</script>
+</body>
+</html>
